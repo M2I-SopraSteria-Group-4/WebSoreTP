@@ -38,4 +38,11 @@ public class Command {
 	@OneToOne( mappedBy = "command")
 	private Payment payment;
 
+	public Command(Date commandDate, User user) {
+		this.commandDate = commandDate;
+		this.user = user;
+	}
+
+	
+
 }

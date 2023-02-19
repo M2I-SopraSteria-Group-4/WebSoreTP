@@ -1,14 +1,15 @@
 package com.example.UserTP.controllers;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.UserTP.entity.User;
 import com.example.UserTP.entity.Role;
+import com.example.UserTP.entity.Command;
 import com.example.UserTP.entity.Info;
+import com.example.UserTP.services.CommandServices;
 import com.example.UserTP.services.UserServices;
 import com.github.javafaker.Faker;
 
@@ -19,6 +20,9 @@ public class UserController {
     @Autowired
     UserServices uService;
 
+    @Autowired
+    CommandServices cService;
+
     @GetMapping("/fake")
 	  public User fakeUser() {
         Faker faker = new Faker();
@@ -26,9 +30,7 @@ public class UserController {
         String password = faker.internet().password();
         int connectionNumber = faker.number().numberBetween(0, 100000);
 
-        // List<Role> roles = new ArrayList<>();
-        // roles.add(new Role("ADMIN"));
-        // roles.add(new Role("USER"));
+
         
 
         User user = new User(login, password, connectionNumber);
@@ -37,8 +39,14 @@ public class UserController {
         List<User> users = new ArrayList<>(); 
         users.add(user);
 
-        Role role = new Role("Admin",users);
+        Role role = new Role("User",users);
         uService.createRole(role);
+
+        Date dateCommand = faker.date().birthday(1, 5);
+
+        Command command = new Command(dateCommand,user);
+
+        cService.createCommand(command);
 
         
 
@@ -55,16 +63,6 @@ public class UserController {
         
         uService.createInfo(info);
 
-        
-
-        
-
-        
-
-        
-
-        
-        
         return user;
     }
 
