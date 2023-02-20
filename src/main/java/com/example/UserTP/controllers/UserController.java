@@ -6,8 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.UserTP.entity.*;
-import com.example.UserTP.services.CommandServices;
-import com.example.UserTP.services.UserServices;
+import com.example.UserTP.services.*;
 import com.github.javafaker.Faker;
 
 @RestController
@@ -19,6 +18,9 @@ public class UserController {
 
     @Autowired
     CommandServices cService;
+
+    @Autowired
+    PaymentServices pService;
 
     @GetMapping("/fake")
 	  public User fakeUser() {
@@ -49,7 +51,7 @@ public class UserController {
         
         uService.createRole(role);
 
-        Date dateCommand = faker.date().birthday(1, 5);
+        Date dateCommand = faker.date().birthday(1, 6);
 
         Command command = new Command(dateCommand,user);
 
@@ -60,6 +62,13 @@ public class UserController {
         CommandLine cLine = new CommandLine(quantity, command);        
 
         cService.createCL(cLine);
+        String accountNumber = faker.finance().iban();
+        double amount = faker.number().randomDouble(2, 0, 1000000);
+        Date paymentDate = faker.date().birthday(1, 6);
+
+
+        Paypal paypal = new Paypal( accountNumber, amount,  paymentDate, command);
+        pService.createPaypal(paypal);
 
         
         String adress = faker.address().streetAddressNumber();

@@ -14,7 +14,7 @@ public abstract class Payment {
 	
 	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int payment_id;
-	private float amount;
+	private double amount;
 	private Date paymentDate;
 	
 	
@@ -22,5 +22,14 @@ public abstract class Payment {
 	@JoinColumn(name="command_id", nullable=false)
 	@JsonBackReference
 	private Command command;
+
+
+	public Payment(double amount, Date paymentDate, Command command) {
+		this.amount = amount;
+		this.paymentDate = paymentDate;
+		this.command = command;
+	}
+
+	
 
 }
