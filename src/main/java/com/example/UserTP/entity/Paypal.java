@@ -7,9 +7,7 @@ import lombok.*;
 @Entity
 @Table(name="paypal")
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor 
-public class PaypalPayment extends Payment{
-	
-	
+public class Paypal extends Payment{
 	
 	@Column(name ="account_number")
 	private String accountNumber;
@@ -18,10 +16,4 @@ public class PaypalPayment extends Payment{
 		return super.toString() + "PaypalPayment [ accountNumber=" + accountNumber + "]";
 	}
 	
-	
-	
-	
-	
-	
-
 }

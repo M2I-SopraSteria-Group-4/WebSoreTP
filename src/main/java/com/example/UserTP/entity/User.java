@@ -27,7 +27,7 @@ public class User {
 	@JsonManagedReference
 	private List<Role> role;
 
-	@OneToOne( mappedBy = "user")
+	@OneToOne( mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference
 	private Info info;
 	
@@ -54,12 +54,4 @@ public class User {
 		this.connectionNumber = connectionNumber;
 		this.role = role;
 	}
-
-	
-
-	
-
-	
-	
-
 }

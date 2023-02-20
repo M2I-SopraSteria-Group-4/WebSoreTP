@@ -5,10 +5,7 @@ import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.UserTP.entity.User;
-import com.example.UserTP.entity.Role;
-import com.example.UserTP.entity.Command;
-import com.example.UserTP.entity.Info;
+import com.example.UserTP.entity.*;
 import com.example.UserTP.services.CommandServices;
 import com.example.UserTP.services.UserServices;
 import com.github.javafaker.Faker;
@@ -39,7 +36,17 @@ public class UserController {
         List<User> users = new ArrayList<>(); 
         users.add(user);
 
-        Role role = new Role("User",users);
+        
+
+        //Role role = new Role("User",users);
+
+        Role role = uService.getRandomRole();
+        if (role == null) {
+        role = new Role("User",users);
+        } else {
+        role.setUser(users);
+        }
+        
         uService.createRole(role);
 
         Date dateCommand = faker.date().birthday(1, 5);
@@ -48,11 +55,13 @@ public class UserController {
 
         cService.createCommand(command);
 
-        
+        int quantity = faker.number().randomDigitNotZero();
+
+        CommandLine cLine = new CommandLine(quantity, command);        
+
+        cService.createCL(cLine);
 
         
-        
-
         String adress = faker.address().streetAddressNumber();
 	    String city = faker.address().city();
 	    String email = faker.internet().emailAddress();
@@ -64,6 +73,7 @@ public class UserController {
         uService.createInfo(info);
 
         return user;
+
     }
 
     // @GetMapping("/fake")
@@ -137,6 +147,11 @@ public class UserController {
     @GetMapping("/userrole/{id}")
     public List<Role> getUserRole(@PathVariable("id") int id){
         return uService.getUserRole(id);
+    }
+
+    @DeleteMapping("info/{id}")
+    public void deleteInfo(@PathVariable("id") int id){
+        uService.deleteInfo(id);
     }
         
 

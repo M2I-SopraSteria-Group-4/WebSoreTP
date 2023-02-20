@@ -19,7 +19,7 @@ public class Info {
 	
 	
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true )
 	@JoinColumn(name="user_id", nullable=false)
 	@JsonBackReference
 	private User user;

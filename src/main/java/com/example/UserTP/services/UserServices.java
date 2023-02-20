@@ -127,5 +127,14 @@ public class UserServices {
 		}
 	}
 
+	public Role getRandomRole() {
+        List<Role> roles = rRepo.findAll();
+        if (roles.size() == 0) {
+            return null;
+        }
+        int randomIndex = new Random().nextInt(roles.size());
+        return roles.get(randomIndex);
+    }
+
 
 }

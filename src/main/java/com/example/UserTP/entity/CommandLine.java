@@ -32,4 +32,11 @@ public class CommandLine {
 	@JsonBackReference
 	private Article article;
 
+	public CommandLine(int quantity, Command command) {
+		this.quantity = quantity;
+		this.command = command;
+	}
+
+	
+
 }
