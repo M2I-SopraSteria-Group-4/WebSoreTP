@@ -3,6 +3,7 @@ package com.example.UserTP.controllers;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.UserTP.entity.*;
@@ -39,14 +40,11 @@ public class UserController {
         users.add(user);
 
         
-
-        //Role role = new Role("User",users);
-
         Role role = uService.getRandomRole();
         if (role == null) {
-        role = new Role("User",users);
-        } else {
-        role.setUser(users);
+            role = new Role("User",users);
+            } else {
+            role.setUser(users);
         }
         
         uService.createRole(role);
@@ -57,9 +55,26 @@ public class UserController {
 
         cService.createCommand(command);
 
+        String brand = faker.app().name();
+        String description = faker.lorem().characters(2, 5);
+        double price = faker.number().randomDouble(2, 10, 10000);
+
+        Article article = cService.getRandomArticle();
+        System.out.println("=========================================");
+        System.out.println(article.getBrand()+article.getPrice()); 
+        System.out.println("=========================================");
+        // if (article == null) {
+        //     article = new Article(brand, description, price);
+        //     cService.createArticle(article);
+        //     } else {
+        //     cService.createArticle(article);
+        // }
+        
+
         int quantity = faker.number().randomDigitNotZero();
 
-        CommandLine cLine = new CommandLine(quantity, command);        
+        CommandLine cLine = new CommandLine(quantity, command, article);     
+         
 
         cService.createCL(cLine);
         String accountNumber = faker.finance().iban();
@@ -85,19 +100,19 @@ public class UserController {
 
     }
 
-    // @GetMapping("/fake")
-    // public User fakeUser() {
-    //     Faker faker = new Faker();
-    //     String login = faker.name().username();
-    //     String password = faker.internet().password();
-    //     int connectionNumber = faker.number().numberBetween(0, 100000);
+    @GetMapping("/fakeUser")
+    public User fakeUserOnly() {
+        Faker faker = new Faker();
+        String login = faker.name().username();
+        String password = faker.internet().password();
+        int connectionNumber = faker.number().numberBetween(0, 100000);
 
-    //     User user = new User(login, password, connectionNumber);        
+        User user = new User(login, password, connectionNumber);        
     
-    //     uService.createUser(user);
+        uService.createUser(user);
     
-    //     return user;
-    // }
+        return user;
+    }
 
     @GetMapping("/fakeInfo")
     public Info fakeInfo() {
@@ -119,6 +134,13 @@ public class UserController {
     @GetMapping
     public List<User> getAll(){
         return uService.getAllUsers();
+    }
+
+    @GetMapping("/users")
+    public String showAllUsers(Model model) {
+    List<User> users = uService.getAllUsers();
+    model.addAttribute("users", users);
+     return "users";
     }
 
     @GetMapping("/{id}")
@@ -161,6 +183,11 @@ public class UserController {
     @DeleteMapping("info/{id}")
     public void deleteInfo(@PathVariable("id") int id){
         uService.deleteInfo(id);
+    }
+
+    @GetMapping("/info")
+    public List<Info> getAllInfo(){
+        return uService.getAllInfo();
     }
         
 
