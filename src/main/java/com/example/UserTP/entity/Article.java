@@ -1,6 +1,8 @@
 package com.example.UserTP.entity;
 
 import javax.persistence.*;
+import java.util.List;
+import com.fasterxml.jackson.annotation.*;
 
 import lombok.*;
 
@@ -13,10 +15,17 @@ public class Article {
 	private int article_id;
 	private String description;
 	private String brand;
-	private float price;
+	private double price;
+	public Article(String description, String brand, double price) {
+		this.description = description;
+		this.brand = brand;
+		this.price = price;
+	}
 	
-	@OneToOne
-	@JoinColumn(name="article_id", nullable=false)
-	private CommandLine commandLine;
+	// @OneToMany(mappedBy = "article")
+	// @JsonBackReference
+    // private List<CommandLine> CommandLine;
+
+	
 
 }

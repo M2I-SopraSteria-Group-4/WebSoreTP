@@ -20,6 +20,9 @@ public class CommandServices {
     @Autowired
 	UserRepository uRepo;
 
+    @Autowired
+	ArticleRepository aRepo;
+
     public List<Command> getAllCommands(){
         return cRepo.findAll();
     }
@@ -81,5 +84,49 @@ public class CommandServices {
             clRepo.save(cLine);
         }
     }
+
+    public List<Article> getAllArticles(){
+        return aRepo.findAll();
+    }
+
+    public Article getOneArticle(int id){
+
+        return aRepo.findById(id).orElse(null);
+    }
+
+    public void createArticle(Article a){
+        aRepo.save(a);
+    }
+
+    public void deleteArticle(int id){
+        Article a = aRepo.findById(id).orElse(null);
+        if(a!=null) aRepo.delete(a);
+    }
+
+    public void updateArticle(Article a, int id){
+        Article article= aRepo.findById(id).orElse(null);
+        if(article != null) {
+            article.setBrand(a.getBrand());
+            article.setDescription(a.getBrand());
+            article.setPrice(a.getPrice());
+            aRepo.save(article);
+        }
+    }
+
+    public Article getRandomArticle() {
+        List<Article> articles = aRepo.findAll();
+        if (articles.size() == 0) {
+            return null;
+        }
+        int randomIndex = new Random().nextInt(articles.size());
+        return articles.get(randomIndex);
+    }
+
+    public List<Command> getCommandByUser(int id){
+        User user = uRepo.findById(id).orElse(null);
+        return user.getCommand();
+    }
+
+    
 
 }

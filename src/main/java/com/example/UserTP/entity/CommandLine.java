@@ -1,7 +1,7 @@
 package com.example.UserTP.entity;
 
 import javax.persistence.*;
-
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.*;
@@ -29,10 +29,11 @@ public class CommandLine {
 	
 	@ManyToOne
 	@JoinColumn(name = "article_id")
-	@JsonBackReference
+	@JsonManagedReference
 	private Article article;
 
-	public CommandLine(int quantity, Command command) {
+	public CommandLine(int quantity, Command command, Article article) {
+		this.article=article;
 		this.quantity = quantity;
 		this.command = command;
 	}

@@ -28,7 +28,7 @@ public class Command {
 	@JsonBackReference
 	private User user;
 	
-	@OneToMany(mappedBy = "command")
+	@OneToMany(mappedBy = "command",cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference
     private List<CommandLine> commandLine;
 //	@OneToOne

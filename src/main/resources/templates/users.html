@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>All Users</title>
+  <!-- Add any required CSS and JavaScript files -->
+</head>
+
+<body>
+  <h1>All Users</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Login</th>
+      </tr>
+    </thead>
+    <tbody>
+        <p>pushing p</p>
+      <tr th:each="user : ${users}">
+        <td th:text="${user.login}"></td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+</html>

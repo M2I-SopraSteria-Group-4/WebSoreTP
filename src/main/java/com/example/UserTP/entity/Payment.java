@@ -18,7 +18,7 @@ public abstract class Payment {
 	private Date paymentDate;
 	
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true )
 	@JoinColumn(name="command_id", nullable=false)
 	@JsonBackReference
 	private Command command;
