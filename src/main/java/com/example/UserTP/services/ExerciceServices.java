@@ -1,7 +1,5 @@
 package com.example.UserTP.services;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 @Service
 public class ExerciceServices {
@@ -124,15 +122,15 @@ public class ExerciceServices {
 
 
 
-    public static void main(String[] args) {
-        ExerciceServices es = new ExerciceServices();
+    // public static void main(String[] args) {
+    //     ExerciceServices es = new ExerciceServices();
         //System.out.println(es.reverseStringLetter("keep running"));
         //System.out.println(es.SumLetter("-rwxrwxrwx"));
         //System.out.println(es.duel(100,90,10,10));
         //System.out.println(es.BirdTalk("alex"));
         //System.out.println(es.ADN("AACT"));
-        System.out.println(es.Round(12));
-    }
+        //System.out.println(es.Round(12));
+    // }
 
 
     

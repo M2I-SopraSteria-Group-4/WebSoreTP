@@ -6,7 +6,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import com.example.UserTP.entity.*;
 import com.example.UserTP.services.*;
-import com.github.javafaker.Faker;
 import org.springframework.stereotype.Controller;
 
 @Controller

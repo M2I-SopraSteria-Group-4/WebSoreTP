@@ -148,7 +148,7 @@ public class UserServices {
 	}
 
 	public List<User> getUserByDateAndCity(Date date, String city ){
-		List<User> users = uRepo.findAll();
+		//List<User> users = uRepo.findAll();
 		List<Command> commands = cRepo.findAll();
 		List<User> filteredDateUsers = new ArrayList<User>();
 		for(Command c : commands){
