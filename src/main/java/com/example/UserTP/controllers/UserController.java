@@ -3,11 +3,7 @@ package com.example.UserTP.controllers;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.stereotype.Controller;
-
 import com.example.UserTP.entity.*;
 import com.example.UserTP.services.*;
 import com.github.javafaker.Faker;

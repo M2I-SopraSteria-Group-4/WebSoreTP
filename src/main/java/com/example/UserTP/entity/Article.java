@@ -1,9 +1,6 @@
 package com.example.UserTP.entity;
 
 import javax.persistence.*;
-import java.util.List;
-import com.fasterxml.jackson.annotation.*;
-
 import lombok.*;
 
 @Entity
