@@ -15,6 +15,9 @@ public class PaymentServices {
     @Autowired
     PaypalRepository pRepo;
 
+    @Autowired
+    UserRepository uRepo;
+
     public List<CardPayment> getAllCard(){
         return ccRepo.findAll();
     }
@@ -25,6 +28,11 @@ public class PaymentServices {
 
     public void createCard(CardPayment cc ){
         ccRepo.save(cc);
+    }
+
+    public void deleteCard(int id){
+        CardPayment cc = ccRepo.findById(id).orElse(null);
+        if (cc!=null) ccRepo.delete(cc);
     }
 
     public void updateCard(CardPayment cc, int id){
@@ -51,6 +59,11 @@ public class PaymentServices {
         pRepo.save(p);
     }
 
+    public void deletePaypal(int id){
+        Paypal p = pRepo.findById(id).orElse(null);
+        if (p!=null) pRepo.delete(p);
+    }
+
     public void updatePaypal(Paypal p, int id){
         Paypal paypal = pRepo.findById(id).orElse(null);
         if(p!=null){
@@ -60,6 +73,28 @@ public class PaymentServices {
             paypal.setCommand(p.getCommand());
             pRepo.save(paypal);
         }
+    }
+
+    public Payment getByUser(int user_id){
+        User u = uRepo.findById(user_id).orElse(null);
+        List<Command> commands = u.getCommand();
+        for(Command c : commands){
+            if(c.getPayment()!=null) return c.getPayment();
+        }
+        return null;
+    }
+
+    public double userPayments(int id){
+        double userPayment = 0;
+        User user = uRepo.findById(id).orElse(null);
+        List<Command> commands = user.getCommand();
+        for(Command c : commands){
+            Payment p = c.getPayment();
+            userPayment += p.getAmount();
+        }
+
+
+        return userPayment;
     }
     
 }

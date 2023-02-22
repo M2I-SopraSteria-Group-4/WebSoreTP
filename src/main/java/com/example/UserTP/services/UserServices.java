@@ -5,12 +5,8 @@ import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.UserTP.entity.Info;
-import com.example.UserTP.entity.User;
-import com.example.UserTP.entity.Role;
-import com.example.UserTP.repository.UserRepository;
-import com.example.UserTP.repository.InfoRepository;
-import com.example.UserTP.repository.RoleRepository;
+import com.example.UserTP.entity.*;
+import com.example.UserTP.repository.*;
 
 @Service
 public class UserServices {
@@ -23,6 +19,9 @@ public class UserServices {
 
 	@Autowired
 	RoleRepository rRepo;
+
+	@Autowired
+	CommandRepository cRepo;
 	
 	public List<User> getAllUsers(){
 		return uRepo.findAll();
@@ -135,6 +134,38 @@ public class UserServices {
         int randomIndex = new Random().nextInt(roles.size());
         return roles.get(randomIndex);
     }
+
+	public List<User> getUserByCity(String city){
+		List<User> users = uRepo.findAll();
+		List<User> filteredUsers = new ArrayList<User>();
+		for (User u : users){
+			if (u.getInfo().getCity().equalsIgnoreCase(city)){
+				filteredUsers.add(u);
+			}
+		
+		}
+		return filteredUsers;
+	}
+
+	public List<User> getUserByDateAndCity(Date date, String city ){
+		List<User> users = uRepo.findAll();
+		List<Command> commands = cRepo.findAll();
+		List<User> filteredDateUsers = new ArrayList<User>();
+		for(Command c : commands){
+			if (c.getCommandDate().after(date)){
+				filteredDateUsers.add(c.getUser());
+			}
+		}
+		List<User> filteredUsers = new ArrayList<User>();
+		for (User u : filteredDateUsers){
+			if (u.getInfo().getCity().equalsIgnoreCase(city)){
+				filteredUsers.add(u);
+
+			}
+		
+		}
+		return filteredUsers;
+	}
 
 
 }

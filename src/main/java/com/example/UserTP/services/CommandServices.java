@@ -127,6 +127,46 @@ public class CommandServices {
         return user.getCommand();
     }
 
+    public List<Article> getArticleByCommandId(int id){
+        Command command = cRepo.findById(id).orElse(null);
+        List<Article> articles = new ArrayList<Article>();
+        for(CommandLine cl : command.getCommandLine()){
+            articles.add(cl.getArticle());
+        }
+        return articles;
+    }
+
+    public List<Command> getCommandByDates(Date date1, Date date2){
+        List<Command> commands = cRepo.findAll();
+        List<Command> filteredCommands = new ArrayList<>();
+        for(Command c : commands){
+            if(c.getCommandDate().after(date1) && c.getCommandDate().before(date2)){
+                filteredCommands.add(c);
+            }
+        }
+        return filteredCommands;
+    }
+
+    public List<Article> getArticleByBrand(String brand){
+        List<Article> articles = aRepo.findAll();
+        List<Article> filteredArticles = new ArrayList<>();
+        for(Article a : articles){
+            if(a.getBrand().equalsIgnoreCase(brand)){
+                filteredArticles.add(a);
+            }
+        }
+        return filteredArticles;
+    }
+
+    public void createArticleList(List <Article> articles){
+        for(Article a : articles){
+            aRepo.save(a);
+        }
+    }
+
+
+
+
     
 
 }

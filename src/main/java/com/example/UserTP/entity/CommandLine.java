@@ -32,10 +32,16 @@ public class CommandLine {
 	@JsonManagedReference
 	private Article article;
 
+
 	public CommandLine(int quantity, Command command, Article article) {
 		this.article=article;
 		this.quantity = quantity;
 		this.command = command;
+	}
+
+	public CommandLine(int quantity, Article article) {
+		this.article=article;
+		this.quantity = quantity;
 	}
 
 	

@@ -3,22 +3,39 @@
 
 <head>
   <title>All Users</title>
-  <!-- Add any required CSS and JavaScript files -->
+  <style>
+    table {
+      margin: 0 auto;
+      border-collapse: collapse;
+      border: 1px solid black;
+    }
+    th, td {
+      padding: 8px;
+      border: 1px solid black;
+    }
+  </style>
 </head>
 
 <body>
-  <h1>All Users</h1>
+  <h1 style="text-align: center;" >All Users</h1>
 
   <table>
     <thead>
       <tr>
         <th>Login</th>
+        <th>email</th>
+        <th>Phone Number</th>
+        <th>Address</th>
+        <th>City</th>
       </tr>
     </thead>
     <tbody>
-        <p>pushing p</p>
-      <tr th:each="user : ${users}">
+      <tr th:each="user, i : ${users}">
         <td th:text="${user.login}"></td>
+        <td th:text="${infos[i.index].email}"></td>
+        <td th:text="${infos[i.index].phoneNumber}"></td>
+        <td th:text="${infos[i.index].adress}"></td>
+        <td th:text="${infos[i.index].city}"></td>
       </tr>
     </tbody>
   </table>

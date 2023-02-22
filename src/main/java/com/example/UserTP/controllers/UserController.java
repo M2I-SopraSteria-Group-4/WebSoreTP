@@ -5,6 +5,8 @@ import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Controller;
 
 import com.example.UserTP.entity.*;
 import com.example.UserTP.services.*;
@@ -23,82 +25,7 @@ public class UserController {
     @Autowired
     PaymentServices pService;
 
-    @GetMapping("/fake")
-	  public User fakeUser() {
-        Faker faker = new Faker();
-        String login = faker.name().username();
-        String password = faker.internet().password();
-        int connectionNumber = faker.number().numberBetween(0, 100000);
-
-
-        
-
-        User user = new User(login, password, connectionNumber);
-        uService.createUser(user);
-
-        List<User> users = new ArrayList<>(); 
-        users.add(user);
-
-        
-        Role role = uService.getRandomRole();
-        if (role == null) {
-            role = new Role("User",users);
-            } else {
-            role.setUser(users);
-        }
-        
-        uService.createRole(role);
-
-        Date dateCommand = faker.date().birthday(1, 6);
-
-        Command command = new Command(dateCommand,user);
-
-        cService.createCommand(command);
-
-        String brand = faker.app().name();
-        String description = faker.lorem().characters(2, 5);
-        double price = faker.number().randomDouble(2, 10, 10000);
-
-        Article article = cService.getRandomArticle();
-        System.out.println("=========================================");
-        System.out.println(article.getBrand()+article.getPrice()); 
-        System.out.println("=========================================");
-        // if (article == null) {
-        //     article = new Article(brand, description, price);
-        //     cService.createArticle(article);
-        //     } else {
-        //     cService.createArticle(article);
-        // }
-        
-
-        int quantity = faker.number().randomDigitNotZero();
-
-        CommandLine cLine = new CommandLine(quantity, command, article);     
-         
-
-        cService.createCL(cLine);
-        String accountNumber = faker.finance().iban();
-        double amount = faker.number().randomDouble(2, 0, 1000000);
-        Date paymentDate = faker.date().birthday(1, 6);
-
-
-        Paypal paypal = new Paypal( accountNumber, amount,  paymentDate, command);
-        pService.createPaypal(paypal);
-
-        
-        String adress = faker.address().streetAddressNumber();
-	    String city = faker.address().city();
-	    String email = faker.internet().emailAddress();
-	    String phoneNumber = faker.phoneNumber().cellPhone();
-        
-
-        Info info = new Info(adress, city,email, phoneNumber, user);
-        
-        uService.createInfo(info);
-
-        return user;
-
-    }
+    
 
     @GetMapping("/fakeUser")
     public User fakeUserOnly() {
@@ -136,12 +63,7 @@ public class UserController {
         return uService.getAllUsers();
     }
 
-    @GetMapping("/users")
-    public String showAllUsers(Model model) {
-    List<User> users = uService.getAllUsers();
-    model.addAttribute("users", users);
-     return "users";
-    }
+    
 
     @GetMapping("/{id}")
     public User getOne(@PathVariable("id") int id){
@@ -189,6 +111,8 @@ public class UserController {
     public List<Info> getAllInfo(){
         return uService.getAllInfo();
     }
+
+   
         
 
     

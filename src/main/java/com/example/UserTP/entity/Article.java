@@ -16,6 +16,7 @@ public class Article {
 	private String description;
 	private String brand;
 	private double price;
+	
 	public Article(String description, String brand, double price) {
 		this.description = description;
 		this.brand = brand;

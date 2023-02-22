@@ -69,23 +69,28 @@ public class FakeServices {
 
     public User addCOmmandLine(){
         Article article = cService.getRandomArticle();
+        double itemPrice = article.getPrice();
+
         System.out.println("=========================================");
-        System.out.println(article.getBrand()+article.getPrice()); 
+        System.out.println(article.getBrand()+ " " +article.getPrice()); 
         System.out.println("=========================================");
         
 
         int quantity = faker.number().randomDigitNotZero();
+        System.out.println("=========================================");
+        System.out.println("quantity : " + quantity); 
+        System.out.println("=========================================");
 
         CommandLine cLine = new CommandLine(quantity, command, article);     
          
 
         cService.createCL(cLine);
-        return user;
-    }
 
-    public User addPayment(){
         String accountNumber = faker.finance().iban();
-        double amount = faker.number().randomDouble(2, 0, 1000000);
+        double amount = quantity*(double) itemPrice;
+        System.out.println("=========================================");
+        System.out.println("amount : " + amount); 
+        System.out.println("=========================================");
         Date paymentDate = faker.date().birthday(1, 6);
 
 
@@ -93,6 +98,12 @@ public class FakeServices {
         pService.createPaypal(paypal);
         return user;
     }
+
+    // public User addPayment(){
+
+        
+    //     return user;
+    // }
 
 }
 

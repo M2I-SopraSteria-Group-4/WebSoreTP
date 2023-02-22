@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>All Articles</title>
+  <style>
+    table {
+      margin: 0 auto;
+      border-collapse: collapse;
+      border: 1px solid black;
+    }
+    th, td {
+      padding: 8px;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+
+<body>
+  <h1 style="text-align: center;" >All Articles for Command th:text= "${id}"</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Brand</th>
+        <th>Description</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="article : ${articles}">
+        <td th:text="${article.brand}"></td>
+        <td th:text="${article.description}"></td>
+        <td th:text="${article.price}"></td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+</html>

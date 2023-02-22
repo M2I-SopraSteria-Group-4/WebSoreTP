@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>All Articles</title>
+  <style>
+    table {
+      margin: 0 auto;
+      border-collapse: collapse;
+      border: 1px solid black;
+    }
+    th, td {
+      padding: 8px;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+
+<body>
+  <h1 style="text-align: center;" >All Commands</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Login</th>
+        <th>Date</th>
+        <th>Article</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="user, i: ${users}">
+        <td th:text="${user.login}"></td>
+        <td th:text="${commands[i.index].commandDate}"></td>
+        <td th:text="${articles[i.index].brand}"></td>
+        <td th:text="${articles[i.index].description}"></td>
+        <td th:text="${articles[i.index].price}"></td>
+        <td th:text="${commandLines[i.index].quantity}"></td>
+        <td th:text="${articles[i.index].price*commandLines[i.index].quantity}"></td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+</html>
